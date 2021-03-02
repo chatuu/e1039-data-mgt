@@ -65,15 +65,14 @@ for data_path in ${data_path_list[*]} ; do
     rsync -av $dir_macros/gridrun_data.sh $work/$job_name/gridrun_data.sh
 
     if [ $do_sub == 1 ]; then
-	cmd="jobsub_submit"
-	cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
-	#cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
+        cmd="jobsub_submit --grid"
+        cmd="$cmd -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/e1039/e1039-sl7:latest\"'"
+        cmd="$cmd --append_condor_requirements='(TARGET.HAS_SINGULARITY=?=true)'"
+        cmd="$cmd --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
 	cmd="$cmd --mail_never"
 	cmd="$cmd -L $work/$job_name/log/log.txt"
 	cmd="$cmd -f $work/input.tar.gz"
 	cmd="$cmd -d OUTPUT $work/$job_name/out"
-	cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
-	cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"SU-ITS\")'"
 	cmd="$cmd -f $data_path"
 	cmd="$cmd file://`which $work/$job_name/gridrun_data.sh` $nevents $run_name $data_file"
 	echo "$cmd"
