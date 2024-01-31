@@ -81,7 +81,7 @@ for data_path in ${data_path_list[*]} ; do
 	mkdir -p $work/$job_name/input
 	rsync -av $work/input.tar.gz $data_path  $work/$job_name/input
 	cd $work/$job_name/
-	$work/$job_name/gridrun_data.sh $nevents $run_num $data_file | tee $work/$job_name/log/log.txt
+	$work/$job_name/gridrun_data.sh $nevents $run_name $data_file | tee $work/$job_name/log/log.txt
 	cd -
     fi
 

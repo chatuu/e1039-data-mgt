@@ -36,7 +36,7 @@ while read RunNum; do
     cp -ru /data2/e1039/dst/$run_dir /pnfs/e1039/tape_backed/decoded_data
 
     #submit the grid job
-    $dir_scripts/gridsub_data.sh $run_dir 1 $RunNum 0 splitting
+    $dir_scripts/gridsub_data.sh $run_dir 0 $RunNum 0 splitting
 
     reco_status=1    
 
