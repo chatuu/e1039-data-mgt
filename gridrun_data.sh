@@ -41,7 +41,7 @@ source $FN_SETUP
 
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
-time root -b -q RecoE1039Data.C\($nevents\)
+time root -l -b -q "RecoE1039Data.C("$run_number", \"data.root\", "$nevents")";
 RET=$?
 if [ $RET -ne 0 ] ; then
     echo "Error in RecoE1039Data.C: $RET"
